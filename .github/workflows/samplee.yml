@@ -1,13 +1,15 @@
 name: CI/CD Pipeline
 
 on:
-  release:
+  release: 
     types: [ published, edited]
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
   push:  
     tags:
       - qa*
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   test:
