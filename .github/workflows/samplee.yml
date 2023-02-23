@@ -29,7 +29,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 #     needs: test
-    if: github.event_name == 'release'
+#     if: github.event_name == 'release'
+    if: startsWith(github.ref, 'refs/release/')
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
