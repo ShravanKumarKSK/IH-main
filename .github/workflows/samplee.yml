@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
 #     needs: test
 #     if: github.event_name == 'release'
-    if: startsWith(github.ref, 'refs/release/')
+    if: startsWith(github.ref, 'refs/release/types')
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
