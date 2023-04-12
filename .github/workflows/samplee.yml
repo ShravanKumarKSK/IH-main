@@ -1,6 +1,7 @@
 name: CI/CD Pipeline
 
 on:
+  workflow_dispatch:
   pull_request: 
     branches: 
       - main
@@ -17,42 +18,18 @@ on:
       - main
 
 jobs:
-  dev_pull:
-    runs-on: ubuntu-latest
-#     needs: test
-    if: github.event_name == 'pull_request'
-#     if: startsWith(github.ref, 'refs/release/types')
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Deploy application
-      run: |
-        # Run your deployment commands here
-        echo "pull_request deployments"
-  test:
-    runs-on: ubuntu-latest
-#     if: github.event_name == 'push'
-#     if: startsWith(github.ref, 'refs/tags/')
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/qa')
 
-#     if: ${{ github.ref == 'refs/tags/' }}
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Run tests
-      run: |
-        # Run your test commands here
-        echo "tag created"
-
-  deploy:
+  build:
+    name: Build
     runs-on: ubuntu-latest
-#     needs: test
-    if: github.event_name == 'release'
-#     if: startsWith(github.ref, 'refs/release/types')
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Deploy application
-      run: |
-        # Run your deployment commands here
-        echo "released deployments"
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@v0.1.9
+      with:
+        host: 13.126.234.43
+        username: ubuntu
+        key: ${{secrets.PRIVATE_KEY}}
+        port: 22
+        script: |
+          whoami
+          echo -e ${{secrets.ENV}} >> .env
