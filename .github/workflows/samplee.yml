@@ -32,4 +32,5 @@ jobs:
         port: 22
         script: |
           whoami
+          git pull https://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@github.com/ShravanKumarKSK/IH-main
         
